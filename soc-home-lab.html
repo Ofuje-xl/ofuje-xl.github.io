@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC Home Lab — Jeffrey | Cybersecurity Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a25;
+  --accent:#00ff88;--accent2:#00cc6a;--accent-dim:rgba(0,255,136,.08);
+  --red:#ff4444;--amber:#ffaa00;--blue:#4488ff;--purple:#aa66ff;--teal:#00ddaa;
+  --text:#e0e0e0;--text2:#999;--text3:#666;
+  --border:#2a2a35;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Space Grotesk',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none;transition:color .2s}
+a:hover{color:#fff}
+img{max-width:100%;border-radius:6px;border:1px solid var(--border)}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--mono);color:var(--accent);font-weight:600;font-size:.95rem}
+.nav a.back{font-family:var(--mono);font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:.4rem}
+.nav a.back:hover{color:var(--accent)}
+
+.hero{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-block;font-family:var(--mono);font-size:.75rem;color:var(--accent);border:1px solid rgba(0,255,136,.3);padding:.3rem .8rem;border-radius:2px;margin-bottom:1.5rem;letter-spacing:.05em;text-transform:uppercase}
+.hero h1{font-size:2.4rem;font-weight:700;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#fff 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.05rem;color:var(--text2);max-width:680px;margin:0 auto 2rem}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:1.5rem}
+.tag{font-family:var(--mono);font-size:.7rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.03em}
+.tag-green{background:rgba(0,255,136,.1);color:var(--accent);border:1px solid rgba(0,255,136,.2)}
+.tag-red{background:rgba(255,68,68,.1);color:var(--red);border:1px solid rgba(255,68,68,.2)}
+.tag-blue{background:rgba(68,136,255,.1);color:var(--blue);border:1px solid rgba(68,136,255,.2)}
+.tag-amber{background:rgba(255,170,0,.1);color:var(--amber);border:1px solid rgba(255,170,0,.2)}
+.tag-purple{background:rgba(170,102,255,.1);color:var(--purple);border:1px solid rgba(170,102,255,.2)}
+
+.content{max-width:800px;margin:0 auto;padding:0 2rem 4rem}
+.section{margin-bottom:3.5rem}
+.section h2{font-size:1.5rem;font-weight:600;color:#fff;margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.section h2 .m{color:var(--accent);font-family:var(--mono);font-size:1rem;font-weight:400}
+.section h3{font-size:1.1rem;font-weight:600;color:#fff;margin:2rem 0 .8rem}
+.section p{color:var(--text2);margin-bottom:1rem;font-size:.95rem}
+
+.arch-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.85rem}
+.arch-table th{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);text-align:left;padding:.6rem .8rem;border-bottom:2px solid var(--accent);background:var(--accent-dim)}
+.arch-table td{padding:.55rem .8rem;border-bottom:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:.8rem}
+.arch-table tr:hover td{background:var(--accent-dim);color:var(--text)}
+
+.scenario{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.scenario::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%}
+.scenario.red::before{background:var(--red)}
+.scenario.blue::before{background:var(--blue)}
+.scenario.amber::before{background:var(--amber)}
+.scenario.purple::before{background:var(--purple)}
+.scenario .label{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem;display:inline-block;padding:.2rem .5rem;border-radius:2px}
+.scenario.red .label{color:var(--red);background:rgba(255,68,68,.1)}
+.scenario.blue .label{color:var(--blue);background:rgba(68,136,255,.1)}
+.scenario.amber .label{color:var(--amber);background:rgba(255,170,0,.1)}
+.scenario.purple .label{color:var(--purple);background:rgba(170,102,255,.1)}
+.scenario h3{margin:0 0 .8rem;font-size:1.05rem}
+.scenario p{font-size:.9rem;margin-bottom:.8rem}
+
+pre{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1rem;overflow-x:auto;margin:1rem 0;font-family:var(--mono);font-size:.8rem;color:var(--accent);line-height:1.6}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.2rem;text-align:center}
+.stat .num{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--accent);display:block}
+.stat .desc{font-size:.75rem;color:var(--text3);margin-top:.3rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+
+.mitre-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.85rem}
+.mitre-table th{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--red);text-align:left;padding:.6rem .8rem;border-bottom:2px solid var(--red);background:rgba(255,68,68,.05)}
+.mitre-table td{padding:.55rem .8rem;border-bottom:1px solid var(--border);color:var(--text2);font-size:.85rem}
+.mitre-table td:first-child{font-family:var(--mono);color:var(--red);font-weight:500}
+.mitre-table tr:hover td{background:rgba(255,68,68,.04)}
+
+.evidence{margin:1.5rem 0}
+.evidence-caption{font-family:var(--mono);font-size:.75rem;color:var(--text3);margin-top:.5rem;text-align:center;font-style:italic}
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+
+.takeaway{background:var(--bg2);border-left:3px solid var(--accent);padding:1.2rem 1.5rem;margin-bottom:1rem;border-radius:0 6px 6px 0}
+.takeaway strong{color:#fff}
+.takeaway p{margin:0;font-size:.9rem}
+
+.troubleshoot{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin:1.5rem 0}
+.troubleshoot .step{display:flex;gap:.8rem;margin-bottom:.8rem;font-size:.9rem}
+.troubleshoot .step-num{font-family:var(--mono);color:var(--accent);font-weight:600;flex-shrink:0}
+.troubleshoot .step-text{color:var(--text2)}
+.troubleshoot .step-text .fix{color:var(--accent)}
+.troubleshoot .step-text .err{color:var(--red)}
+
+.footer{text-align:center;padding:2rem;color:var(--text3);font-family:var(--mono);font-size:.75rem;border-top:1px solid var(--border)}
+
+@media(max-width:768px){
+  .hero h1{font-size:1.6rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .evidence-grid{grid-template-columns:1fr}
+  .arch-table{font-size:.7rem}
+  .arch-table td,.arch-table th{padding:.4rem .5rem}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.section{animation:fadeUp .6s ease forwards}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-brand">[jeffrey.sec]</span>
+  <a href="https://ofuje-xl.github.io" class="back">&larr; back to portfolio</a>
+</nav>
+
+<div class="hero">
+  <span class="hero-badge">Project // SOC Home Lab</span>
+  <h1>Network Segmentation, SIEM Deployment &amp; Threat Detection</h1>
+  <p>Built a segmented SOC lab with six VMs across four subnets. Deployed Wazuh SIEM, simulated real-world attacks, and wrote custom detection rules to identify brute force activity.</p>
+  <div class="tags">
+    <span class="tag tag-green">Wazuh SIEM</span>
+    <span class="tag tag-red">Kali Linux</span>
+    <span class="tag tag-blue">pfSense</span>
+    <span class="tag tag-amber">Active Directory</span>
+    <span class="tag tag-purple">VMware</span>
+    <span class="tag tag-green">Hydra</span>
+    <span class="tag tag-blue">Nmap</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="stats">
+    <div class="stat"><span class="num">6</span><span class="desc">Virtual Machines</span></div>
+    <div class="stat"><span class="num">4</span><span class="desc">Network Subnets</span></div>
+    <div class="stat"><span class="num">3,988</span><span class="desc">Alerts Captured</span></div>
+    <div class="stat"><span class="num">6</span><span class="desc">MITRE Techniques</span></div>
+  </div>
+
+  <!-- Overview -->
+  <div class="section">
+    <h2><span class="m">#</span> Overview</h2>
+    <p>I designed and built a segmented Security Operations Centre lab replicating a realistic corporate network. The environment features an attacker subnet isolated from a corporate LAN, a dedicated SIEM subnet running Wazuh, and a pfSense firewall controlling all inter-subnet traffic.</p>
+    <p>From this infrastructure, I simulated brute force attacks, network reconnaissance, and file tampering &mdash; then detected every one of them through Wazuh&rsquo;s alerting, File Integrity Monitoring, and custom correlation rules I wrote myself.</p>
+    <p>This project was inspired by <a href="https://medium.com/@nantysean" target="_blank">Sean Nanty&rsquo;s</a> detection and monitoring home lab series, which I adapted and extended with my own attack simulations, troubleshooting, and detection engineering.</p>
+  </div>
+
+  <!-- Architecture -->
+  <div class="section">
+    <h2><span class="m">#</span> Lab Architecture</h2>
+    <p>All VMs run on VMware Workstation with each subnet mapped to a dedicated virtual network. pfSense routes between all segments, enforcing the same segmentation model used in enterprise environments.</p>
+    <table class="arch-table">
+      <thead><tr><th>VM</th><th>IP Address</th><th>Subnet</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>pfSense</td><td>192.168.2.1</td><td>All subnets</td><td>Firewall / router</td></tr>
+        <tr><td>Kali Linux</td><td>192.168.2.2</td><td>Attacker (192.168.2.0/24)</td><td>Attack simulation</td></tr>
+        <tr><td>Windows 10</td><td>192.168.4.3</td><td>Corporate LAN (192.168.4.0/24)</td><td>Target endpoint + Wazuh agent</td></tr>
+        <tr><td>Windows Server</td><td>192.168.4.x</td><td>Corporate LAN (192.168.4.0/24)</td><td>Active Directory + DNS</td></tr>
+        <tr><td>Ubuntu VM</td><td>192.168.3.2</td><td>Monitoring (192.168.3.0/24)</td><td>Reserved for future monitoring</td></tr>
+        <tr><td>Wazuh Manager</td><td>192.168.5.2</td><td>SIEM (192.168.5.0/24)</td><td>Centralised SIEM (Debian)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Attack Simulations -->
+  <div class="section">
+    <h2><span class="m">#</span> Attack Simulations &amp; Detection</h2>
+
+    <!-- Scenario 1: Brute Force -->
+    <div class="scenario red">
+      <div class="label">Scenario 01</div>
+      <h3>RDP Brute Force Attack</h3>
+      <p><strong style="color:#fff">Attack:</strong> Used Hydra from Kali to launch a credential stuffing attack against the Windows 10 VM&rsquo;s RDP service (port 3389), targeting the SBruce account with a wordlist of 3,550 passwords.</p>
+      <pre>hydra -l SBruce -P /home/kali/passwords.txt rdp://192.168.4.3 -t 4 -vV</pre>
+      <p><strong style="color:#fff">Detection:</strong> Wazuh captured 3,988 authentication failure events (Windows Event ID 4625). The attacker IP (192.168.2.2), workstation name (&ldquo;kali&rdquo;), and NTLM logon type 3 were all visible in the alert metadata. MITRE ATT&amp;CK techniques automatically mapped: T1078 (Valid Accounts) and T1110 (Brute Force).</p>
+      <p>Hydra completed 2,166 attempts before RDP stopped accepting connections &mdash; a realistic outcome, as services often become unresponsive under sustained brute force load.</p>
+
+      <div class="evidence">
+        <img src="images/soc-lab/hydra-brute-force.png" alt="Hydra brute force attack running in Kali terminal">
+        <p class="evidence-caption">Hydra running credential stuffing against RDP &mdash; 2,166 of 3,552 attempts before connection failure</p>
+      </div>
+
+      <div class="evidence-grid">
+        <div class="evidence">
+          <img src="images/soc-lab/wazuh-alert-list.png" alt="Wazuh security alerts showing brute force detection">
+          <p class="evidence-caption">Wazuh alert list &mdash; Rule 60122 firing with MITRE T1078/T1531 mapping</p>
+        </div>
+        <div class="evidence">
+          <img src="images/soc-lab/wazuh-alert-detail.png" alt="Wazuh alert detail showing attacker IP and event metadata">
+          <p class="evidence-caption">Alert detail &mdash; source IP 192.168.2.2, Event ID 4625, status 0xc000006d</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 2: Nmap -->
+    <div class="scenario blue">
+      <div class="label">Scenario 02</div>
+      <h3>Network Reconnaissance (Nmap)</h3>
+      <p><strong style="color:#fff">Attack:</strong> Ran SYN stealth scans, targeted service scans, and service version detection from Kali against the Windows 10 target.</p>
+      <pre>sudo nmap -sS -Pn -p 1-1000 192.168.4.3         # SYN stealth scan
+sudo nmap -sS -Pn -p 135,139,445,3389,5985 192.168.4.3  # Targeted scan
+sudo nmap -sV -Pn -p 3389 192.168.4.3            # Version detection</pre>
+      <p><strong style="color:#fff">Findings:</strong> The stealth scan showed all 1,000 ports as filtered &mdash; pfSense was dropping unsolicited SYN packets, demonstrating effective segmentation. The targeted scan revealed only port 3389 (RDP) as open. Version detection identified Microsoft Terminal Services on Windows.</p>
+      <p><strong style="color:var(--amber)">Security finding:</strong> The attacker interface had a default &ldquo;allow LAN to any&rdquo; rule with no logging. Scans passed through without being recorded. In production, this should be replaced with specific allow rules and logging enabled on all interfaces.</p>
+
+      <div class="evidence-grid">
+        <div class="evidence">
+          <img src="images/soc-lab/nmap-service-scan.png" alt="Nmap service version scan results">
+          <p class="evidence-caption">Nmap version detection &mdash; RDP identified as Microsoft Terminal Services</p>
+        </div>
+        <div class="evidence">
+          <img src="images/soc-lab/pfsense-firewall-rules.png" alt="pfSense firewall rules showing overly permissive attacker interface">
+          <p class="evidence-caption">pfSense rules &mdash; overly permissive &ldquo;allow LAN to any&rdquo; on attacker interface</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 3: FIM -->
+    <div class="scenario amber">
+      <div class="label">Scenario 03</div>
+      <h3>File Integrity Monitoring (FIM)</h3>
+      <p><strong style="color:#fff">Setup:</strong> Configured the Wazuh agent on Windows 10 to monitor a sensitive directory in real time by adding a custom syscheck directive to ossec.conf:</p>
+      <pre>&lt;directories check_all="yes" realtime="yes" report_changes="yes"&gt;
+  C:\Users\SBruce\Desktop\SensitiveFiles
+&lt;/directories&gt;</pre>
+      <p><strong style="color:#fff">Simulation:</strong> Created, modified, and deleted a file containing simulated sensitive data to trigger FIM alerts.</p>
+      <p><strong style="color:#fff">Detection:</strong> Wazuh captured file modification and file deletion events with full path details and user attribution. MITRE ATT&amp;CK mappings included T1485 (Data Destruction), T1565 (Stored Data Manipulation), and T1070.004 (File Deletion).</p>
+
+      <div class="evidence">
+        <img src="images/soc-lab/wazuh-fim-dashboard.png" alt="Wazuh File Integrity Monitoring dashboard showing modifications and deletions">
+        <p class="evidence-caption">FIM dashboard &mdash; file modification and deletion detected with path and user attribution</p>
+      </div>
+    </div>
+
+    <!-- Scenario 4: Custom Rule -->
+    <div class="scenario purple">
+      <div class="label">Scenario 04</div>
+      <h3>Custom Wazuh Detection Rule</h3>
+      <p><strong style="color:#fff">Problem:</strong> The default Wazuh rule 60122 flags every single failed logon as level 5 (low severity). A single typo and a sustained brute force attack trigger the same severity.</p>
+      <p><strong style="color:#fff">Solution:</strong> Wrote a custom correlation rule that escalates to high severity only when the pattern indicates an actual attack:</p>
+      <pre>&lt;group name="custom_brute_force,"&gt;
+  &lt;rule id="100001" level="12" frequency="8" timeframe="120"&gt;
+    &lt;if_matched_sid&gt;60122&lt;/if_matched_sid&gt;
+    &lt;description&gt;CUSTOM: RDP brute force attack detected&lt;/description&gt;
+    &lt;mitre&gt;
+      &lt;id&gt;T1110&lt;/id&gt;
+    &lt;/mitre&gt;
+  &lt;/rule&gt;
+&lt;/group&gt;</pre>
+      <p><strong style="color:#fff">How it works:</strong> The rule chains to existing rule 60122 and only triggers when 8+ failed logons occur within 120 seconds, escalating from level 5 to level 12. MITRE T1110 (Brute Force) maps the alert to the framework for structured reporting.</p>
+      <p><strong style="color:#fff">Result:</strong> After deploying the rule and re-running Hydra, 7 high-severity (level 12) alerts appeared on the dashboard &mdash; up from zero. The MITRE ATT&amp;CK visualisation now shows &ldquo;Brute Force&rdquo; as a distinct detection category.</p>
+
+      <div class="evidence">
+        <img src="images/soc-lab/wazuh-overview-dashboard.png" alt="Wazuh dashboard showing custom rule results with Level 12 alerts and MITRE mapping">
+        <p class="evidence-caption">Dashboard after custom rule &mdash; 7 Level 12 alerts, Brute Force visible in MITRE ATT&amp;CK chart</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="section">
+    <h2><span class="m">#</span> Troubleshooting</h2>
+    <h3>Wazuh Agent: &ldquo;Never Connected&rdquo;</h3>
+    <p>After registering the Windows 10 agent, the dashboard showed &ldquo;Never connected.&rdquo; Here&rsquo;s how I diagnosed and fixed it:</p>
+    <div class="troubleshoot">
+      <div class="step"><span class="step-num">01</span><span class="step-text">Verified network connectivity: <code>Test-NetConnection 192.168.5.2 -Port 1514</code> returned <span class="fix">TcpTestSucceeded: True</span> &mdash; ruled out firewall issues</span></div>
+      <div class="step"><span class="step-num">02</span><span class="step-text">Checked agent service: <code>Get-Service WazuhSvc</code> showed status <span class="err">Stopped</span></span></div>
+      <div class="step"><span class="step-num">03</span><span class="step-text">Attempted start &mdash; failed with <span class="err">&ldquo;Cannot open WazuhSvc service&rdquo;</span> because PowerShell wasn&rsquo;t running as Administrator</span></div>
+      <div class="step"><span class="step-num">04</span><span class="step-text">Started with elevated privileges &mdash; service started but immediately stopped again</span></div>
+      <div class="step"><span class="step-num">05</span><span class="step-text">Checked ossec.log &mdash; found <span class="err">Invalid server address: 0.0.0.0</span> followed by <span class="err">No client configured. Exiting.</span></span></div>
+      <div class="step"><span class="step-num">06</span><span class="step-text">Updated server address in ossec.conf from 0.0.0.0 to 192.168.5.2, restarted service &mdash; <span class="fix">agent connected immediately</span></span></div>
+    </div>
+    <p>This mirrors real-world SOC operations where agents deployed via templates often ship with placeholder addresses. The ability to trace the issue from dashboard status &rarr; service state &rarr; log analysis &rarr; config fix is the same diagnostic workflow used in production SIEM environments.</p>
+  </div>
+
+  <!-- MITRE Coverage -->
+  <div class="section">
+    <h2><span class="m">#</span> MITRE ATT&amp;CK Coverage</h2>
+    <table class="mitre-table">
+      <thead><tr><th>Technique</th><th>Name</th><th>Detection Method</th></tr></thead>
+      <tbody>
+        <tr><td>T1110</td><td>Brute Force</td><td>Custom Wazuh rule 100001 (correlation of Event ID 4625)</td></tr>
+        <tr><td>T1078</td><td>Valid Accounts</td><td>Wazuh rule 60122 (failed logon attempts)</td></tr>
+        <tr><td>T1046</td><td>Network Service Scanning</td><td>Nmap scan results correlated with pfSense logs</td></tr>
+        <tr><td>T1485</td><td>Data Destruction</td><td>Wazuh File Integrity Monitoring</td></tr>
+        <tr><td>T1565</td><td>Stored Data Manipulation</td><td>Wazuh FIM &mdash; file modification detection</td></tr>
+        <tr><td>T1070.004</td><td>Indicator Removal: File Deletion</td><td>Wazuh FIM &mdash; file deletion detection</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Takeaways -->
+  <div class="section">
+    <h2><span class="m">#</span> Key Takeaways</h2>
+    <div class="takeaway">
+      <p><strong>Detection engineering is more than deploying tools.</strong> The default Wazuh ruleset flagged every failed logon identically. Writing a custom correlation rule that distinguishes a single typo from a sustained attack is the difference between a noisy SIEM and a useful one.</p>
+    </div>
+    <div class="takeaway">
+      <p><strong>Network segmentation works &mdash; but only if you verify it.</strong> The Nmap scan proved pfSense was filtering traffic. However, the overly permissive attacker interface rule and lack of firewall logging were gaps that would be unacceptable in production.</p>
+    </div>
+    <div class="takeaway">
+      <p><strong>Troubleshooting is the real skill.</strong> The Wazuh agent enrollment issue required methodical diagnosis across four layers: network connectivity, service status, application logs, and configuration files.</p>
+    </div>
+    <div class="takeaway">
+      <p><strong>Visibility requires configuration.</strong> File Integrity Monitoring only works when you define what to monitor. The default Wazuh FIM configuration doesn&rsquo;t cover user-created directories &mdash; explicit path configuration and real-time monitoring must be enabled.</p>
+    </div>
+  </div>
+
+  <!-- Tools -->
+  <div class="section">
+    <h2><span class="m">#</span> Tools &amp; Technologies</h2>
+    <div class="tags" style="justify-content:flex-start">
+      <span class="tag tag-green">Wazuh SIEM</span>
+      <span class="tag tag-blue">pfSense</span>
+      <span class="tag tag-red">Hydra</span>
+      <span class="tag tag-red">Nmap</span>
+      <span class="tag tag-purple">VMware Workstation</span>
+      <span class="tag tag-amber">Windows Server / AD</span>
+      <span class="tag tag-green">Debian</span>
+      <span class="tag tag-blue">Ubuntu</span>
+      <span class="tag tag-red">Kali Linux</span>
+      <span class="tag tag-amber">RDP / NTLM</span>
+      <span class="tag tag-purple">Syslog</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <a href="https://ofuje-xl.github.io">&larr; back to portfolio</a> &nbsp;&bull;&nbsp; designed &amp; built by jeffrey.sec &nbsp;&bull;&nbsp; &copy; 2026
+</div>
+
+</body>
+</html>
