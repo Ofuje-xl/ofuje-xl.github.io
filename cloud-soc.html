@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft Cloud SOC — Jeffrey | Cybersecurity Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a25;
+  --accent:#00ff88;--accent2:#00cc6a;--accent-dim:rgba(0,255,136,.08);
+  --red:#ff4444;--amber:#ffaa00;--blue:#4488ff;--purple:#aa66ff;--teal:#00ddaa;
+  --text:#e0e0e0;--text2:#999;--text3:#666;--border:#2a2a35;
+  --mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none;transition:color .2s} a:hover{color:#fff}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--mono);color:var(--accent);font-weight:600;font-size:.95rem}
+.nav a.back{font-family:var(--mono);font-size:.85rem;color:var(--text2)}
+.hero{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-block;font-family:var(--mono);font-size:.75rem;color:var(--accent);border:1px solid rgba(0,255,136,.3);padding:.3rem .8rem;border-radius:2px;margin-bottom:1.5rem;letter-spacing:.05em;text-transform:uppercase}
+.hero h1{font-size:2.4rem;font-weight:700;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#fff 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.05rem;color:var(--text2);max-width:720px;margin:0 auto 2rem}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:1.5rem}
+.tag{font-family:var(--mono);font-size:.7rem;padding:.3rem .7rem;border-radius:2px;letter-spacing:.03em;background:rgba(0,255,136,.1);color:var(--accent);border:1px solid rgba(0,255,136,.2)}
+.content{max-width:850px;margin:0 auto;padding:0 2rem 4rem}
+.section{margin-bottom:3.5rem}
+.section h2{font-size:1.5rem;font-weight:600;color:#fff;margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.section h2 .m{color:var(--accent);font-family:var(--mono);font-size:1rem;font-weight:400}
+.section h3{font-size:1.05rem;color:#fff;margin:1.7rem 0 .7rem}
+.section p{color:var(--text2);margin-bottom:1rem;font-size:.95rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.2rem;text-align:center}
+.stat .num{font-family:var(--mono);font-size:1.35rem;font-weight:700;color:var(--accent);display:block}
+.stat .desc{font-size:.72rem;color:var(--text3);margin-top:.3rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.arch{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.4rem;margin:1.5rem 0;font-family:var(--mono);font-size:.8rem;color:var(--text2);overflow:auto;white-space:pre}
+.arch-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.85rem}
+.arch-table th{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);text-align:left;padding:.6rem .8rem;border-bottom:2px solid var(--accent);background:var(--accent-dim)}
+.arch-table td{padding:.55rem .8rem;border-bottom:1px solid var(--border);color:var(--text2);font-size:.84rem}
+.note{background:var(--bg2);border-left:3px solid var(--accent);padding:1.2rem 1.5rem;margin:1rem 0;border-radius:0 6px 6px 0}
+.note.warning{border-left-color:var(--amber)}
+.note strong{color:#fff}.note p{margin:0;font-size:.9rem}
+.challenge{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.3rem;margin:1rem 0}
+.challenge .label{font-family:var(--mono);font-size:.7rem;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.challenge p{margin:.35rem 0;font-size:.9rem}
+code{font-family:var(--mono);color:var(--accent);background:var(--bg3);padding:.1rem .35rem;border-radius:3px}
+.checklist{list-style:none;margin:1rem 0}
+.checklist li{color:var(--text2);margin:.55rem 0;padding-left:1.7rem;position:relative}
+.checklist li:before{content:'✓';position:absolute;left:0;color:var(--accent);font-family:var(--mono)}
+.footer{text-align:center;padding:2rem;color:var(--text3);font-family:var(--mono);font-size:.75rem;border-top:1px solid var(--border)}
+@media(max-width:768px){.hero h1{font-size:1.7rem}.stats{grid-template-columns:repeat(2,1fr)}.arch-table{font-size:.72rem}}
+</style>
+</head>
+<body>
+<nav class="nav"><span class="nav-brand">[jeffrey.sec]</span><a href="https://ofuje-xl.github.io" class="back">&larr; back to portfolio</a></nav>
+
+<div class="hero">
+  <span class="hero-badge">Project // Microsoft Cloud SOC</span>
+  <h1>Azure SOC Foundation &amp; Secure Windows Endpoint</h1>
+  <p>Phase 1 of a hands-on cloud security project focused on Microsoft Sentinel, Azure networking, endpoint security, RBAC and cost-aware lab design. The goal is to build toward detection engineering, KQL hunting and automated security operations.</p>
+  <div class="tags">
+    <span class="tag">Microsoft Sentinel</span><span class="tag">Azure</span><span class="tag">Log Analytics</span>
+    <span class="tag">Windows 11</span><span class="tag">NSG</span><span class="tag">RBAC</span><span class="tag">Cloud Security</span>
+  </div>
+</div>
+
+<div class="content">
+  <div class="stats">
+    <div class="stat"><span class="num">1</span><span class="desc">Windows Endpoint</span></div>
+    <div class="stat"><span class="num">2</span><span class="desc">Azure Regions</span></div>
+    <div class="stat"><span class="num">1</span><span class="desc">Sentinel Workspace</span></div>
+    <div class="stat"><span class="num">Phase 1</span><span class="desc">Completed</span></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Overview</h2>
+    <p>I built the foundation for a Microsoft-focused cloud SOC using Azure, Microsoft Sentinel and a Windows 11 endpoint. Rather than treating the project as a portal walkthrough, I designed the environment around practical security constraints: least exposure, predictable cost, clear network segmentation and reusable infrastructure for later detection work.</p>
+    <p>The completed foundation will be used in later phases to ingest Windows telemetry, write KQL hunting queries, create analytics rules, investigate incidents and add automation.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Architecture</h2>
+    <div class="arch">Switzerland North
+└── Log Analytics Workspace
+    └── Microsoft Sentinel
+
+Poland Central
+└── vnet-cloudsoc-endpoint-plc  (10.20.0.0/16)
+    └── snet-endpoint           (10.20.10.0/24)
+        └── Windows 11 endpoint (10.20.10.4)
+            └── NSG-protected access</div>
+
+    <table class="arch-table">
+      <thead><tr><th>Component</th><th>Region / Address</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Microsoft Sentinel</td><td>Switzerland North</td><td>SIEM and future detection layer</td></tr>
+        <tr><td>Log Analytics Workspace</td><td>Switzerland North</td><td>Central telemetry store</td></tr>
+        <tr><td>Endpoint VNet</td><td>Poland Central / 10.20.0.0/16</td><td>Isolated endpoint network</td></tr>
+        <tr><td>Endpoint Subnet</td><td>10.20.10.0/24</td><td>Dedicated Windows endpoint subnet</td></tr>
+        <tr><td>Windows Endpoint</td><td>10.20.10.4</td><td>Future telemetry and attack-simulation source</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Security &amp; Cost Decisions</h2>
+    <ul class="checklist">
+      <li>Used Azure for Students and configured a monthly budget with cost alerts.</li>
+      <li>Kept Sentinel and Log Analytics in an allowed region supported by the student subscription.</li>
+      <li>Used a low-cost B-series Windows VM instead of higher-cost D/F-series compute.</li>
+      <li>Enabled Trusted Launch, Secure Boot and vTPM on the Windows endpoint.</li>
+      <li>Used a Standard SSD and avoided unnecessary data disks, Ultra Disk and capacity reservations.</li>
+      <li>Did not expose RDP broadly to the internet.</li>
+      <li>When direct RDP was required, the temporary rule was restricted to a single source IP.</li>
+      <li>Kept paid Bastion disabled because the free Developer SKU was unavailable in the endpoint region.</li>
+      <li>Validated outbound HTTPS connectivity before moving to telemetry onboarding.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> RBAC &amp; Identity Lesson</h2>
+    <p>A useful design constraint appeared early: the Azure for Students subscription was associated with a university-managed Microsoft Entra tenant. I had Owner rights over the Azure subscription, but that did not make me a Security Administrator or Global Administrator in the Entra tenant.</p>
+    <div class="note">
+      <p><strong>Key lesson:</strong> Azure RBAC controls access to Azure resources such as VMs, VNets and Log Analytics. Microsoft Entra roles control directory-level objects and tenant administration. Subscription Owner does not automatically imply tenant administrator.</p>
+    </div>
+    <p>Because of this separation, Sentinel-to-Defender portal onboarding was deferred rather than trying to modify a tenant I do not administer.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Challenges &amp; Troubleshooting</h2>
+    <div class="challenge">
+      <div class="label">01 — Region policy restriction</div>
+      <p><strong>Problem:</strong> The student subscription blocked the original UK South deployment.</p>
+      <p><strong>Resolution:</strong> Reviewed the allowed-region policy and deployed the Sentinel workspace in Switzerland North.</p>
+    </div>
+    <div class="challenge">
+      <div class="label">02 — VM SKU unavailable</div>
+      <p><strong>Problem:</strong> Suitable Windows 11 VM sizes were unavailable in Switzerland North for the subscription.</p>
+      <p><strong>Resolution:</strong> Kept Sentinel in Switzerland North and moved the endpoint workload to Poland Central, where <code>Standard_B2als_v2</code> was available.</p>
+    </div>
+    <div class="challenge">
+      <div class="label">03 — Bastion cost constraint</div>
+      <p><strong>Problem:</strong> Bastion Developer was not available in Poland Central, while paid Bastion introduced an hourly cost.</p>
+      <p><strong>Resolution:</strong> Used a temporary public IP with an NSG rule allowing RDP only from the current trusted source IP, with cleanup planned after each working session.</p>
+    </div>
+    <div class="challenge">
+      <div class="label">04 — VM Agent not ready</div>
+      <p><strong>Problem:</strong> The Azure VM Agent initially reported as not ready.</p>
+      <p><strong>Resolution:</strong> Verified boot health and rechecked the agent state; the endpoint later reported Ready without rebuilding the VM.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Verification</h2>
+    <p>From the Windows endpoint, I verified the expected private addressing and outbound connectivity. The endpoint received <code>10.20.10.4/24</code> with gateway <code>10.20.10.1</code>, and HTTPS connectivity to Microsoft services succeeded.</p>
+    <div class="note">
+      <p><strong>Phase 1 outcome:</strong> Azure infrastructure, Sentinel, Log Analytics, RBAC fundamentals, endpoint networking and the Windows endpoint are all operational. The environment is ready for telemetry ingestion and KQL work.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Reflection</h2>
+    <p>The most valuable part of this phase was learning how cloud security decisions interact with real platform constraints. Region policy, subscription limits, identity boundaries and recurring service costs affected the design as much as the technical requirements.</p>
+    <p>I also reinforced an important operational principle: secure cloud architecture is not simply about enabling more security products. It is about understanding trust boundaries, reducing unnecessary exposure, controlling cost and validating that each component behaves as expected before adding complexity.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="m">#</span> Next Phase</h2>
+    <p>Phase 2 will connect Windows security telemetry to Microsoft Sentinel and use KQL to investigate real activity generated inside the endpoint. The next milestone is to move from infrastructure deployment into detection and hunting.</p>
+  </div>
+</div>
+
+<div class="footer">Microsoft Cloud SOC // Phase 1 // Azure security foundation</div>
+</body>
+</html>
